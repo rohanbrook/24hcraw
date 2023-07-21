@@ -6,7 +6,7 @@ require("dotenv").config();
 const email = process.env.EMAIL;
 const pass = process.env.PASS;
 
-logic(1544, 40381);
+logic(1, 40381);
 
 async function logic(start: number, end: number) {
   const path = "uploads/key";
@@ -169,7 +169,7 @@ async function logic(start: number, end: number) {
         } else {
           console.log("Không tìm thấy dữ liệu trong selector đã chỉ định.");
         }
-        await headlessPage.waitForTimeout(5000);
+        await headlessPage.waitForTimeout(2000);
       }
     }
     await headlessPage.close();

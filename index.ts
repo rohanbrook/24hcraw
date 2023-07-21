@@ -1,5 +1,5 @@
 import * as Cheerio from "cheerio";
-import fs from "fs";
+import * as fs from 'fs';
 import puppeteer from "puppeteer";
 require("dotenv").config();
 

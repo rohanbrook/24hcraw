@@ -407,4 +407,43 @@ Description: Office19_RTM19_VisioPro2019R_Retail
 Sub type: X21-74663
 Error code: 0xC004C008
 Time: 7/18/2021 10:58:35 AM (GMT+7)<p></p>
+            </body></html><html><head></head><body>Key: XWCNT-BW8V6-MBQFT-J4Y4C-27JXG
+Description: Win 10 RTM Professional Retail
+Sub type: [TH]X19-98845
+Error code: Online key
+Time: 7/18/2021 11:04:08 AM (GMT+7)
+
+Key: H6N7J-VRPKR-K82WH-X48K4-X2FC6
+Description: Win 10 RTM Professional Retail
+Sub type: [TH]X19-98845
+Error code: Online key
+Time: 7/18/2021 11:04:09 AM (GMT+7)<p></p>
+            </body></html><html><head></head><body>PKeyConfig	: Visual Studio 2019
+ Key		: 8NXPK-78WGQ-7CGBK-K39VD-G849R
+ Key Status	: Valid
+ Product ID	: 00433-90001-30540-AA688
+ Extended PID	: XXXXX-04339-000-130540-00-3082-9200.0000-1982021
+ SKU ID  	: b21b5d34-e9aa-4884-8cee-6ee921d0021d
+ Description	: Visual Studio 2019 RTM Enterprise Retail
+ Edition ID	: Enterprise
+ Sub Type	: X21-90968
+ License Type	: Retail
+ Channel 	: Retail
+<p></p>
+            </body></html><html><head></head><body>Key: B7WF8-N4G66-HWR72-CTYVG-9KT9X
+Description: Windows Server 2012 RTM ServerDatacenter Retail
+Sub Type: X18-18456
+Error Code: Online Key
+Time: 12:12:53 18/07/2021 (GMT+7)
+<p></p>
+            </body></html><html><head></head><body>Key: TKYQV-CXJY9-8CY4R-JCDRR-3KWY3
+Description: Windows 7 Professional OEM:COA
+Sub Type: X15-37341
+Error Code: 0xC004C008
+Time: 12:20:16 18/07/2021 (GMT+7)<p></p>
+            </body></html><html><head></head><body>Key: YKKDQ-PYCGR-FF6HV-JDF77-C738R
+Description: Windows(R) 7, Ultimate edition Retail
+Sub type: N/a
+Error code: 0xC004C008
+Time: 7/18/2021 12:22:06 PM (GMT+7)<p></p>
             </body></html>

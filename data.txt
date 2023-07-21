@@ -349,4 +349,45 @@ Tác động tối thiểu đến hiệu suất hệ thống
 [`Trang tặng phẩm của Bitdefender`](https://www.bitdefender.de/media/html/consumer/new/get-your-180-day-trial-opt/index.html)
 
 
+            </body></html><html><head></head><body>Key: CNQVP-4Q7RD-BRDWP-VYWKK-BKQFR
+Description: Windows Server 2019 RTM ServerDatacenter Retail
+Sub type: [RS5]X21-83712
+Error code: 0xC004C008
+Time: 7/18/2021 10:17:35 AM (GMT+7)
+
+Key: PGDTJ-KNDJM-RXG2T-G8QDJ-TQ9RR
+Description: Windows Server 2019 RTM ServerDatacenter Retail
+Sub type: [RS5]X21-83712
+Error code: 0xC004C008
+Time: 7/18/2021 10:17:23 AM (GMT+7)
+
+Key: MTG3N-66WBY-B4G9Q-8HY8M-3GRB4
+Description: Windows Server 2019 RTM ServerDatacenter Retail
+Sub type: [RS5]X21-83712
+Error code: 0xC004C008
+Time: 7/18/2021 10:17:23 AM (GMT+7)
+
+Key: HGPMR-2WNTM-MQJ4K-QRKTY-6VMM4
+Description: Windows Server 2019 RTM ServerDatacenter Retail
+Sub type: [RS5]X21-83712
+Error code: 0xC004C008
+Time: 7/18/2021 10:17:38 AM (GMT+7)<p></p>
+            </body></html><html><head></head><body>Key: RXN7B-G2T3Q-W8HFT-24JGT-D3YJP
+Description: Win 10 RTM EnterpriseS Volume:MAK
+Sub Type: [RS5]X21-83248
+Activation Count: 8275
+Time: 10:23:35 18/07/2021 (GMT+7)<p></p>
+            </body></html><html><head></head><body>Key: TNWRQ-H33YB-RV2V3-67P46-6F4QP
+Description: Office16_ProPlusMSDNR_Retail
+Sub Type: X20-19681
+Error Code: 0xC004C008
+Time: 10:24:52 18/07/2021 (GMT+7)
+
+Key: XDNXW-9XJTF-QBT7C-V77GK-3RTK2
+Description: Office16_ProPlusMSDNR_Retail
+Sub Type: X20-19681
+Error Code: 0xC004C008
+Time: 10:24:47 18/07/2021 (GMT+7)
+
+<p></p>
             </body></html>

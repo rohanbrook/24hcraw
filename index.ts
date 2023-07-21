@@ -29,7 +29,7 @@ async function logic(start: number, end: number) {
     });
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
-    page.setRequestInterception(true);
+    await page.setRequestInterception(true);
 
     page.on("request", async (request) => {
       if (
@@ -42,9 +42,9 @@ async function logic(start: number, end: number) {
         request.resourceType() === "websocket" ||
         request.resourceType() === "xhr"
       ) {
-        request.abort();
+        await request.abort();
       } else {
-        request.continue();
+        await request.continue();
       }
     });
     page.on("close", async () => {

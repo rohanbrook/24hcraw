@@ -9,11 +9,11 @@ const pass = process.env.PASS;
 logic(1, 40381);
 
 async function logic(start: number, end: number) {
-  const path = "uploads/key";
+  const path = "./uploads/key";
   const cookiesFilePath = "./cookies.json";
 
   if (!fs.existsSync(path)) {
-    fs.mkdirSync(path);
+    fs.mkdirSync(path, { recursive: true });
     console.log(`Đã tạo thư mục "${path}".`);
   }
 

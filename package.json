@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "test": "rm -rf index.js && npx tsc ./index.ts && nodemon index.js",
-    "start": "nodemon --exec ts-node index.ts"
+    "start": "ts-node index.ts"
   },
   "author": "",
   "license": "ISC",

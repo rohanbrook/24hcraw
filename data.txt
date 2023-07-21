@@ -1,0 +1,22 @@
+<html><head></head><body>Key: N2KCC-8GYMJ-BM8W3-2YXHC-BTDVC
+Description: Office16_ProPlusMSDNR_Retail
+Sub Type: X20-19681
+Error Code: 0xC004C060
+Time: 16:03:08 22/04/2021 (GMT+7)
+
+Key: N2F9M-8WGCC-DBMPG-6GR6M-B4HHC
+Description: Office16_ProPlusMSDNR_Retail
+Sub Type: X20-19681
+Error Code: 0xC004C060
+Time: 11:53:54 22/04/2021 (GMT+7)
+
+<p></p>
+            </body></html><html><head></head><body>Key: RXN7B-G2T3Q-W8HFT-24JGT-D3YJP
+Description: Win 10 RTM EnterpriseS Volume:MAK
+Sub Type: [RS5]X21-83248
+Activation Count: 0
+Error Code: Call MS Support
+Time: 15:58:09 03/05/2021 (GMT+7)
+
+<p></p>
+            </body></html>

@@ -1,55 +1,60 @@
 import * as Cheerio from "cheerio";
-import * as fs from 'fs';
+import * as fs from "fs";
 import puppeteer from "puppeteer";
 require("dotenv").config();
 
 const email = process.env.EMAIL;
 const pass = process.env.PASS;
 
-logic(1, 40381);
+const path = "./uploads/key";
+const cookiesFilePath = "./cookies.json";
 
-async function logic(start: number, end: number) {
-  const path = "./uploads/key";
-  const cookiesFilePath = "./cookies.json";
+const main = async () => {
+  try {
+    await ensureDirectories();
+    await login();
+    await processPages(2551, 40381);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
+const ensureDirectories = async () => {
   if (!fs.existsSync(path)) {
     fs.mkdirSync(path, { recursive: true });
     console.log(`Đã tạo thư mục "${path}".`);
   }
+};
 
+const login = async () => {
   if (!fs.existsSync(cookiesFilePath)) {
-    const selectorLogin = "#mainmenu > ul:nth-child(1) > li:nth-child(2) > a";
-    const inputSelector = "#Input_Email";
-    const inputPassSelector = "#Input_Password";
     const browser = await puppeteer.launch({
       headless: false,
       protocolTimeout: 60000,
       defaultViewport: null,
-      args: ["--start-minimized"], // Thêm cờ để ẩn trình duyệt xuống
+      args: ["--start-minimized"],
     });
+
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
-    await page.setRequestInterception(true);
 
     page.on("request", async (request) => {
       if (
-        request.resourceType() === "fetch" ||
-        request.resourceType() === "stylesheet" ||
-        request.resourceType() === "media" ||
-        request.resourceType() === "font" ||
-        request.resourceType() === "cspviolationreport" ||
-        request.resourceType() === "script" ||
-        request.resourceType() === "websocket" ||
-        request.resourceType() === "xhr"
+        [
+          "fetch",
+          "stylesheet",
+          "media",
+          "font",
+          "cspviolationreport",
+          "script",
+          "websocket",
+          "xhr",
+        ].includes(request.resourceType())
       ) {
         await request.abort();
       } else {
         await request.continue();
       }
-    });
-    page.on("close", async () => {
-      console.log("Page closed unexpectedly.");
-      await browser.close();
     });
 
     await page.setUserAgent(
@@ -59,23 +64,24 @@ async function logic(start: number, end: number) {
     const url = `https://kichhoat24h.com`;
 
     await page.goto(url);
-    const check404 = await page.$(selectorLogin);
+    const check404 = await page.$(
+      "#mainmenu > ul:nth-child(1) > li:nth-child(2) > a"
+    );
     if (!check404) {
       await browser.close();
-      return 0;
+      throw new Error("Trang không tồn tại hoặc không thể truy cập.");
     }
-    const g0 = (await page.waitForSelector(selectorLogin)).evaluate(
-      (el) => el.textContent
+
+    await page.waitForSelector(
+      "#mainmenu > ul:nth-child(1) > li:nth-child(2) > a"
     );
-    console.log(await g0);
-    await page.waitForSelector(selectorLogin);
-    await page.click(selectorLogin);
+    await page.click("#mainmenu > ul:nth-child(1) > li:nth-child(2) > a");
 
-    await page.waitForSelector(inputSelector);
-    await page.type(inputSelector, email);
+    await page.waitForSelector("#Input_Email");
+    await page.type("#Input_Email", email);
 
-    await page.waitForSelector(inputPassSelector);
-    await page.type(inputPassSelector, pass);
+    await page.waitForSelector("#Input_Password");
+    await page.type("#Input_Password", pass);
 
     await page.waitForSelector("#Input_RememberMe");
     await page.click("#Input_RememberMe");
@@ -87,50 +93,51 @@ async function logic(start: number, end: number) {
 
     await page.waitForTimeout(2000);
 
-    // Lưu trữ cookies vào tệp
     const cookies = await page.cookies();
     fs.writeFileSync(cookiesFilePath, JSON.stringify(cookies));
 
-    console.log("done time out");
-    // Đóng trình duyệt
+    console.log("Đăng nhập thành công.");
     await browser.close();
   }
-  try {
-    // Khởi tạo lại trình duyệt với chế độ không có giao diện đồ họa
-    const headlessBrowser = await puppeteer.launch({
-      headless: true,
-      defaultViewport: null,
-    });
+};
 
-    const headlessPage = await headlessBrowser.newPage();
-    // Đọc cookies từ tệp (nếu đã lưu trữ trước đó)
-    if (fs.existsSync(cookiesFilePath)) {
-      const cookiesString = fs.readFileSync(cookiesFilePath).toString(); // Chuyển đổi từ Buffer sang chuỗi
-      const cookies = JSON.parse(cookiesString);
-      await headlessPage.setCookie(...cookies);
-    }
+const processPages = async (start: number, end: number) => {
+  const headlessBrowser = await puppeteer.launch({
+    headless: true,
+    defaultViewport: null,
+  });
 
-    const selectorLike =
-      "body > div > main > div > div.col-md-9 > div:nth-child(4) > div:nth-child(1) > a";
-    const selectorContent =
-      "body > div > main > div > div.col-md-9 > div.topic-detail.panel.panel-default > div.panel-body";
-    const imgSelecter =
-      "body > div > main > div > div.col-md-9 > div.topic-detail.panel.panel-default > div.panel-body > img";
-    for (let index = start; index <= end; index++) {
-      headlessPage.on("error", () => {
-        logic(index, end);
-      });
+  const headlessPage = await headlessBrowser.newPage();
+
+  if (fs.existsSync(cookiesFilePath)) {
+    const cookiesString = fs.readFileSync(cookiesFilePath).toString();
+    const cookies = JSON.parse(cookiesString);
+    await headlessPage.setCookie(...cookies);
+  }
+
+  for (let index = start; index <= end; index++) {
+    try {
       const url = `https://kichhoat24h.com/topic/${index}`;
       console.log(url);
       await headlessPage.goto(url);
-      if (await headlessPage.$(selectorLike)) {
-        await headlessPage.waitForSelector(selectorLike);
-        await headlessPage.click(selectorLike);
+
+      if (
+        await headlessPage.$(
+          "body > div > main > div > div.col-md-9 > div:nth-child(4) > div:nth-child(1) > a"
+        )
+      ) {
+        await headlessPage.waitForSelector(
+          "body > div > main > div > div.col-md-9 > div:nth-child(4) > div:nth-child(1) > a"
+        );
+        await headlessPage.click(
+          "body > div > main > div > div.col-md-9 > div:nth-child(4) > div:nth-child(1) > a"
+        );
         await headlessPage.waitForTimeout(2000);
 
-        await headlessPage.waitForSelector(selectorContent);
+        await headlessPage.waitForSelector(
+          "body > div > main > div > div.col-md-9 > div.topic-detail.panel.panel-default > div.panel-body"
+        );
 
-        // Trích xuất dữ liệu từ selector đã chỉ định
         const element = await headlessPage.$(
           "body > div > main > div > div.col-md-9 > div.topic-detail.panel.panel-default > div.panel-body"
         );
@@ -143,14 +150,16 @@ async function logic(start: number, end: number) {
         $("img").remove();
 
         await headlessPage.waitForTimeout(2000);
-        // Chờ cho phần tử (selector) xuất hiện trên trang web
+
         try {
-          await headlessPage.waitForSelector(imgSelecter);
-          // Lấy thông tin vị trí và kích thước của phần tử
-          const elementHandle = await headlessPage.$(imgSelecter);
+          await headlessPage.waitForSelector(
+            "body > div > main > div > div.col-md-9 > div.topic-detail.panel.panel-default > div.panel-body > img"
+          );
+          const elementHandle = await headlessPage.$(
+            "body > div > main > div > div.col-md-9 > div.topic-detail.panel.panel-default > div.panel-body > img"
+          );
           const boundingBox = await elementHandle.boundingBox();
 
-          // Chụp màn hình chỉ với phần tử (selector) được chọn
           await headlessPage.screenshot({
             clip: {
               x: boundingBox.x,
@@ -163,18 +172,25 @@ async function logic(start: number, end: number) {
         } catch (error) {
           console.log("Không có ảnh!");
         }
+
         if (content) {
           fs.appendFileSync("data.txt", $.html(), { flag: "a" });
           console.log("Đã ghi dữ liệu vào file txt thành công.");
         } else {
           console.log("Không tìm thấy dữ liệu trong selector đã chỉ định.");
         }
+
         await headlessPage.waitForTimeout(2000);
       }
+    } catch (error) {
+      console.error("Error on page", index, ":", error);
+      fs.appendFileSync("error.txt", `Error on page ${index} : error`, {
+        flag: "a",
+      });
     }
-    await headlessPage.close();
-  } catch (error) {
-    console.error("Error:", error);
   }
-  fs.appendFileSync("data.txt", `======= end: ${end} =======`, { flag: "a" });
-}
+
+  await headlessPage.close();
+};
+
+main();

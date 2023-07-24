@@ -103,11 +103,15 @@ const login = async () => {
 
 const processPages = async (start: number, end: number) => {
   const headlessBrowser = await puppeteer.launch({
-    headless: true,
+    headless: "new",
     defaultViewport: null,
   });
 
   const headlessPage = await headlessBrowser.newPage();
+  headlessPage.on("close", async () => {
+    console.log("Page closed unexpectedly.");
+    return await headlessBrowser.close();
+  });
 
   if (fs.existsSync(cookiesFilePath)) {
     const cookiesString = fs.readFileSync(cookiesFilePath).toString();
@@ -116,6 +120,7 @@ const processPages = async (start: number, end: number) => {
   }
 
   for (let index = start; index <= end; index++) {
+    console.time("Thời gian thực thi cho một lần lặp");
     try {
       const url = `https://kichhoat24h.com/topic/${index}`;
       console.log(url);
@@ -174,19 +179,21 @@ const processPages = async (start: number, end: number) => {
         }
 
         if (content) {
-          fs.appendFileSync("data.txt", $.html(), { flag: "a" });
+          fs.appendFileSync("data.txt", $.html() + "\n", { flag: "a" });
           console.log("Đã ghi dữ liệu vào file txt thành công.");
         } else {
           console.log("Không tìm thấy dữ liệu trong selector đã chỉ định.");
         }
 
         await headlessPage.waitForTimeout(2000);
+        console.timeEnd("Thời gian thực thi cho một lần lặp");
       }
     } catch (error) {
       console.error("Error on page", index, ":", error);
-      fs.appendFileSync("error.txt", `Error on page ${index} : error`, {
+      fs.appendFileSync("error.txt", `Error on page ${index} : error\n`, {
         flag: "a",
       });
+      return processPages(index, end);
     }
   }
 

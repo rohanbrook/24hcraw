@@ -38,6 +38,8 @@ const login = async () => {
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
 
+    page.setRequestInterception(true);
+
     page.on("request", async (request) => {
       if (
         [

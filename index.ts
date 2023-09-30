@@ -13,7 +13,7 @@ const main = async () => {
   try {
     await ensureDirectories();
     await login();
-    await processPages(2551, 40381);
+    await processPages(40875, 44100);
   } catch (error) {
     console.error("Error:", error);
   }

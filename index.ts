@@ -13,7 +13,7 @@ const main = async () => {
   try {
     await ensureDirectories();
     await login();
-    await processPages(40875, 44100);
+    await processPages(41558, 44100);
   } catch (error) {
     console.error("Error:", error);
   }
@@ -88,13 +88,12 @@ const login = async () => {
     await page.waitForSelector("#Input_RememberMe");
     await page.click("#Input_RememberMe");
 
-    await page.waitForTimeout(10000);
+    new Promise((r) => setTimeout(r, 10000));
 
     await page.waitForSelector("#account > div:nth-child(8) > button");
     await page.click("#account > div:nth-child(8) > button");
 
-    await page.waitForTimeout(2000);
-
+    new Promise((r) => setTimeout(r, 2000));
     const cookies = await page.cookies();
     fs.writeFileSync(cookiesFilePath, JSON.stringify(cookies));
 
@@ -139,8 +138,7 @@ const processPages = async (start: number, end: number) => {
         await headlessPage.click(
           "body > div > main > div > div.col-md-9 > div:nth-child(4) > div:nth-child(1) > a"
         );
-        await headlessPage.waitForTimeout(2000);
-
+        new Promise((r) => setTimeout(r, 2000));
         await headlessPage.waitForSelector(
           "body > div > main > div > div.col-md-9 > div.topic-detail.panel.panel-default > div.panel-body"
         );
@@ -156,8 +154,7 @@ const processPages = async (start: number, end: number) => {
         const $ = Cheerio.load(content);
         $("img").remove();
 
-        await headlessPage.waitForTimeout(2000);
-
+        new Promise((r) => setTimeout(r, 2000));
         try {
           await headlessPage.waitForSelector(
             "body > div > main > div > div.col-md-9 > div.topic-detail.panel.panel-default > div.panel-body > img"
@@ -186,8 +183,9 @@ const processPages = async (start: number, end: number) => {
         } else {
           console.log("Không tìm thấy dữ liệu trong selector đã chỉ định.");
         }
-
-        await headlessPage.waitForTimeout(2000);
+        new Promise((r) => setTimeout(r, 2000));
+        console.timeEnd("Thời gian thực thi cho một lần lặp");
+      } else {
         console.timeEnd("Thời gian thực thi cho một lần lặp");
       }
     } catch (error) {
@@ -195,6 +193,7 @@ const processPages = async (start: number, end: number) => {
       fs.appendFileSync("error.txt", `Error on page ${index} : error\n`, {
         flag: "a",
       });
+      console.timeEnd("Thời gian thực thi cho một lần lặp");
       return processPages(index, end);
     }
   }
